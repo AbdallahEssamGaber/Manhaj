@@ -46,10 +46,32 @@ The frontend calls the RAG side like this:
 **Response**
 ```json
 {
-  "answer": "A binary search tree is...",
-  "sources": ["Lecture 4 slide 12", "Past exam 2023 Q3"]
+  "answer": "A binary search tree is a tree where each node's left child is smaller and right child is larger [1]. It's commonly used for fast lookups [2].",
+  "sources": [
+    {
+      "id": 1,
+      "document": "Lecture 4 - Trees.pdf",
+      "url": "https://firebasestorage.googleapis.com/.../Lecture4-Trees.pdf",
+      "location": "Slide 12",
+      "excerpt": "A BST is a binary tree where left < parent < right for every node.",
+      "page": 12
+    },
+    {
+      "id": 2,
+      "document": "Past Exam 2023.pdf",
+      "url": "https://firebasestorage.googleapis.com/.../PastExam2023.pdf",
+      "location": "Question 3",
+      "excerpt": "BSTs allow O(log n) search time in balanced cases.",
+      "page": 4
+    }
+  ]
 }
 ```
+
+Notes on this format:
+- `answer` includes inline markers like `[1]`, `[2]` matching each source's `id`
+- Each source has `document` (file name), `url` (direct link to the actual file in Firebase Storage), `location` (human-readable, e.g. slide/question number), `excerpt` (the exact text that supports the claim), and `page` (used to jump to that spot in the viewer)
+- The frontend uses `id` to link a clicked `[1]` marker to the matching source object, opens the side panel with a PDF viewer pointed at `url`, and jumps to `page`
 
 This is the only thing both sides need to agree on. Frontend doesn't care how the answer is generated. RAG side doesn't care how it's displayed.
 
@@ -85,7 +107,7 @@ uvicorn main:app --reload --port 8000
 ```
 POST /ask
 Body: { "subject": "Data Structures", "question": "What is a BST?" }
-Response: { "answer": "...", "sources": ["..."] }
+Response: { "answer": "... [1]", "sources": [{ "id": 1, "document": "...", "location": "...", "excerpt": "...", "page": 12 }] }
 ```
 
 Basic FastAPI shape:
@@ -93,6 +115,7 @@ Basic FastAPI shape:
 ```python
 from fastapi import FastAPI
 from pydantic import BaseModel
+from typing import List
 
 app = FastAPI()
 
@@ -100,13 +123,30 @@ class AskRequest(BaseModel):
     subject: str
     question: str
 
-@app.post("/ask")
+class Source(BaseModel):
+    id: int
+    document: str
+    location: str
+    excerpt: str
+    page: int
+
+class AskResponse(BaseModel):
+    answer: str
+    sources: List[Source]
+
+@app.post("/ask", response_model=AskResponse)
 def ask(req: AskRequest):
     # 1. embed req.question with Gemini
     # 2. retrieve top matching chunks for req.subject from Firestore vector search
-    # 3. call Gemini with retrieved context to generate the answer
-    # 4. return answer + sources
-    return {"answer": "...", "sources": ["..."]}
+    #    each chunk should already carry its document name, page number, and location label
+    # 3. call Gemini with retrieved context, instruct it to cite chunks as [1], [2] etc
+    # 4. build the sources list from the chunks actually cited, matching each [n] to its id
+    return {
+        "answer": "A binary search tree is... [1]",
+        "sources": [
+            {"id": 1, "document": "Lecture 4 - Trees.pdf", "location": "Slide 12", "excerpt": "...", "page": 12}
+        ]
+    }
 ```
 
 The frontend calls `http://localhost:8000/ask` (or the deployed URL later) with the request shape above.
@@ -136,3 +176,4 @@ Never push real keys to GitHub. Add `.env*` to `.gitignore`.
 - Pre-index content once, don't re-process per query (saves tokens/cost)
 - Gemini is used as the core LLM + embeddings to maximize Google Technology Bonus eligibility
 - Sidebar categorizes subjects; chat history carries over after sign-in
+- Original document files (PDFs, slides) get uploaded to Firebase Storage during ingestion. Each indexed chunk in Firestore stores its source document's Storage `url` alongside its `page`/`location`, so the RAG response can return a direct link to the real file, not just text
