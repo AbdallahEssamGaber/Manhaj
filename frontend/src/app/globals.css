@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+:root {
+  /* Neutrals tinted toward the navy/teal brand hue (~215) for cohesion */
+  --background: oklch(0.985 0.003 215);
+  --foreground: oklch(0.24 0.035 250);
+  --surface: oklch(0.995 0.002 215);
+  --surface-hover: oklch(0.96 0.006 215);
+  --border: oklch(0.9 0.008 220);
+  --border-light: oklch(0.93 0.006 220);
+  --muted: oklch(0.5 0.025 245);
+  --muted-light: oklch(0.64 0.018 240);
+
+  /* Brand: teal/green primary, light blue secondary, navy for emphasis */
+  --teal: oklch(0.62 0.11 173);
+  --teal-hover: oklch(0.54 0.115 173);
+  --teal-soft: oklch(0.94 0.035 173);
+  --sky: oklch(0.72 0.09 231);
+  --sky-soft: oklch(0.94 0.03 231);
+  --navy: oklch(0.28 0.06 258);
+  --navy-soft: oklch(0.94 0.015 255);
+
+  --user-bubble: var(--navy);
+  --user-bubble-text: oklch(0.98 0.004 220);
+
+  --correct: oklch(0.6 0.13 155);
+  --correct-soft: oklch(0.94 0.04 155);
+  --incorrect: oklch(0.58 0.19 25);
+  --incorrect-soft: oklch(0.94 0.045 25);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+  --color-muted: var(--muted);
+  --color-muted-light: var(--muted-light);
+  --color-teal: var(--teal);
+  --color-teal-hover: var(--teal-hover);
+  --color-teal-soft: var(--teal-soft);
+  --color-sky: var(--sky);
+  --color-sky-soft: var(--sky-soft);
+  --color-navy: var(--navy);
+  --color-navy-soft: var(--navy-soft);
+  --color-user-bubble: var(--user-bubble);
+  --color-user-bubble-text: var(--user-bubble-text);
+  --color-correct: var(--correct);
+  --color-correct-soft: var(--correct-soft);
+  --color-incorrect: var(--incorrect);
+  --color-incorrect-soft: var(--incorrect-soft);
+  --font-display: var(--font-archivo);
+  --font-body: var(--font-spectral);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: oklch(0.19 0.014 250);
+    --foreground: oklch(0.92 0.008 220);
+    --surface: oklch(0.235 0.016 250);
+    --surface-hover: oklch(0.28 0.018 250);
+    --border: oklch(0.34 0.02 245);
+    --border-light: oklch(0.29 0.016 245);
+    --muted: oklch(0.66 0.018 230);
+    --muted-light: oklch(0.48 0.016 235);
+
+    --teal-soft: oklch(0.32 0.05 173 / 0.35);
+    --sky-soft: oklch(0.32 0.05 231 / 0.3);
+    --navy-soft: oklch(0.3 0.02 255 / 0.4);
+    --user-bubble: var(--teal);
+    --user-bubble-text: oklch(0.15 0.02 173);
+  }
+}
+
+:root[data-theme="dark"] {
+  --background: oklch(0.19 0.014 250);
+  --foreground: oklch(0.92 0.008 220);
+  --surface: oklch(0.235 0.016 250);
+  --surface-hover: oklch(0.28 0.018 250);
+  --border: oklch(0.34 0.02 245);
+  --border-light: oklch(0.29 0.016 245);
+  --muted: oklch(0.66 0.018 230);
+  --muted-light: oklch(0.48 0.016 235);
+
+  --teal-soft: oklch(0.32 0.05 173 / 0.35);
+  --sky-soft: oklch(0.32 0.05 231 / 0.3);
+  --navy-soft: oklch(0.3 0.02 255 / 0.4);
+  --user-bubble: var(--teal);
+  --user-bubble-text: oklch(0.15 0.02 173);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-archivo), system-ui, sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Reading passages — answers, landing copy, onboarding descriptions —
+   get the serif so long-form text feels like a textbook, not a chat toy. */
+.font-reading {
+  font-family: var(--font-spectral), Georgia, serif;
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
