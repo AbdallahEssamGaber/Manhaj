@@ -47,14 +47,14 @@ export default function Sidebar({
 
   if (collapsed) {
     return (
-      <aside className="w-14 border-r border-border bg-background flex flex-col items-center py-3 gap-1 shrink-0">
+      <aside className="w-14 border-l border-border bg-background flex flex-col items-center py-3 gap-1 shrink-0">
         <button
           onClick={() => setCollapsed(false)}
           className="p-2 rounded-md hover:bg-surface-hover text-muted transition-colors cursor-pointer"
-          title="Expand sidebar"
+          title="توسيع القائمة"
         >
           <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
         <div className="w-6 border-t border-border my-1" />
@@ -73,7 +73,7 @@ export default function Sidebar({
   }
 
   return (
-    <aside className="w-64 border-r border-border bg-background flex flex-col shrink-0 h-full">
+    <aside className="w-64 border-l border-border bg-background flex flex-col shrink-0 h-full">
       <div className="px-4 py-3.5 flex items-center justify-between border-b border-border-light">
         <div className="flex items-center gap-2 min-w-0">
           <Logo withWordmark={false} size={22} />
@@ -81,11 +81,15 @@ export default function Sidebar({
             <>
               <span className="w-px h-4 bg-border shrink-0" />
               <span
-                className="w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-bold shrink-0"
+                className="w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-bold shrink-0 overflow-hidden"
                 style={{ backgroundColor: university.bg, color: university.text }}
                 title={university.name}
               >
-                {university.shortName}
+                {university.logo ? (
+                  <img src={university.logo} alt={university.name} className="w-full h-full object-contain" />
+                ) : (
+                  university.shortName
+                )}
               </span>
               <span className="text-xs font-medium text-muted truncate">{university.shortName}</span>
             </>

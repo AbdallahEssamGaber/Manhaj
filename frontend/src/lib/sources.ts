@@ -4,15 +4,15 @@
 // so the panel still demonstrates "jump straight to the referenced part."
 
 const introLines = [
-  "This section was covered in the material your instructor assigned for this unit.",
-  "The following passage sets up the context before the key point below.",
-  "As introduced earlier in this document, the topic builds on prior material.",
+  "الجزء ده كان موجود في المادة اللي الدكتور حددها للوحدة دي.",
+  "الفقرة الجاية بتمهّد للنقطة الأساسية اللي جاية بعدها.",
+  "زي ما اتذكر قبل كده في المستند ده، الموضوع مبني على مادة سابقة.",
 ];
 
 const outroLines = [
-  "The next section continues with worked examples building on this point.",
-  "See the following slide for a diagram illustrating this in more detail.",
-  "This connects directly to the practice problems at the end of the chapter.",
+  "الجزء اللي بعده فيه أمثلة محلولة مبنية على النقطة دي.",
+  "شوف السلايد اللي بعدها فيها رسم توضيحي بالتفصيل.",
+  "ده مرتبط مباشرة بتمارين آخر الفصل.",
 ];
 
 function seededPick<T>(arr: T[], seed: string): T {

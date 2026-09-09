@@ -9,7 +9,7 @@ interface OnboardingModalProps {
   onComplete: (profile: StudyProfile) => void;
 }
 
-const steps = ["University", "Major", "Year"] as const;
+const steps = ["الجامعة", "التخصص", "السنة"] as const;
 
 export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
   const [step, setStep] = useState(0);
@@ -51,7 +51,7 @@ export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
         <div className="px-6 sm:px-8 pt-6 sm:pt-7 pb-5 border-b border-border-light">
           <div className="flex items-center gap-2.5 mb-5">
             <LogoMark size={24} />
-            <span className="text-sm font-semibold text-foreground">Set up your study space</span>
+            <span className="text-sm font-semibold text-foreground">جهّز مساحة مذاكرتك</span>
           </div>
           <div className="flex items-center gap-2">
             {steps.map((label, i) => (
@@ -77,11 +77,11 @@ export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
         <div className="px-6 sm:px-8 py-6 min-h-[320px]">
           {step === 0 && (
             <div>
-              <h2 className="text-lg font-semibold text-foreground mb-1">Which university are you at?</h2>
-              <p className="text-sm text-muted mb-4 font-reading">We&apos;ll tune your subjects and study modes to match.</p>
+              <h2 className="text-lg font-semibold text-foreground mb-1">جامعتك إيه؟</h2>
+              <p className="text-sm text-muted mb-4 font-reading">هنظبط المواد وأوضاع المذاكرة على أساسها.</p>
               <div className="relative mb-4">
                 <svg
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-light"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-light"
                   width="15"
                   height="15"
                   viewBox="0 0 24 24"
@@ -96,11 +96,11 @@ export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
                   autoFocus
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search your university..."
-                  className="w-full rounded-lg border border-border bg-background pl-9 pr-3 py-2.5 text-sm text-foreground placeholder-muted-light focus:outline-none focus:ring-2 focus:ring-teal/40 focus:border-teal transition-colors"
+                  placeholder="دور على جامعتك..."
+                  className="w-full rounded-lg border border-border bg-background pr-9 pl-3 py-2.5 text-sm text-foreground placeholder-muted-light focus:outline-none focus:ring-2 focus:ring-teal/40 focus:border-teal transition-colors"
                 />
               </div>
-              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5 max-h-[220px] overflow-y-auto pr-1">
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5 max-h-[220px] overflow-y-auto pl-1">
                 {filtered.map((u) => (
                   <button
                     key={u.id}
@@ -109,16 +109,20 @@ export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
                     className="group flex flex-col items-center gap-1.5 rounded-xl p-2.5 text-center transition-transform hover:-translate-y-0.5 cursor-pointer"
                     style={{ backgroundColor: u.bg }}
                   >
-                    <span className="font-display text-lg font-bold leading-none" style={{ color: u.text }}>
-                      {u.shortName}
-                    </span>
+                    {u.logo ? (
+                      <img src={u.logo} alt={u.name} className="h-8 max-w-full object-contain" />
+                    ) : (
+                      <span className="font-display text-lg font-bold leading-none" style={{ color: u.text }}>
+                        {u.shortName}
+                      </span>
+                    )}
                     <span className="text-[10px] font-medium leading-tight" style={{ color: u.text }}>
                       {u.name}
                     </span>
                   </button>
                 ))}
                 {filtered.length === 0 && (
-                  <p className="col-span-full text-sm text-muted-light py-8 text-center">No matches — try another spelling.</p>
+                  <p className="col-span-full text-sm text-muted-light py-8 text-center">مفيش نتايج — جرب تكتب الاسم بطريقة تانية.</p>
                 )}
               </div>
             </div>
@@ -126,9 +130,9 @@ export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
 
           {step === 1 && university && (
             <div>
-              <h2 className="text-lg font-semibold text-foreground mb-1">What&apos;s your major?</h2>
+              <h2 className="text-lg font-semibold text-foreground mb-1">إيه تخصصك؟</h2>
               <p className="text-sm text-muted mb-4 font-reading">
-                At <span className="font-medium text-foreground">{university.name}</span>.
+                في <span className="font-medium text-foreground">{university.name}</span>.
               </p>
               <div className="grid sm:grid-cols-2 gap-2.5">
                 {university.majors.map((m) => (
@@ -136,10 +140,10 @@ export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
                     key={m.id}
                     type="button"
                     onClick={() => selectMajor(m.id)}
-                    className="text-left rounded-lg border border-border bg-background px-4 py-3 hover:border-teal hover:bg-teal-soft transition-colors cursor-pointer"
+                    className="text-right rounded-lg border border-border bg-background px-4 py-3 hover:border-teal hover:bg-teal-soft transition-colors cursor-pointer"
                   >
                     <span className="block text-sm font-semibold text-foreground">{m.name}</span>
-                    <span className="block text-xs text-muted-light mt-0.5">{m.years}-year program</span>
+                    <span className="block text-xs text-muted-light mt-0.5">برنامج {m.years} سنين</span>
                   </button>
                 ))}
               </div>
@@ -148,9 +152,9 @@ export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
 
           {step === 2 && university && selectedMajor && year && (
             <div>
-              <h2 className="text-lg font-semibold text-foreground mb-1">Which year are you in?</h2>
+              <h2 className="text-lg font-semibold text-foreground mb-1">انت في أنهي سنة؟</h2>
               <p className="text-sm text-muted mb-6 font-reading">
-                We suggested Year 1 for {selectedMajor.name} — change it if that&apos;s not you.
+                افترضنا إنك في السنة الأولى في {selectedMajor.name} — غيّرها لو مش كده.
               </p>
               <div className="flex items-center gap-3">
                 <select
@@ -160,13 +164,13 @@ export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
                 >
                   {Array.from({ length: selectedMajor.years }, (_, i) => i + 1).map((y) => (
                     <option key={y} value={y}>
-                      Year {y}
+                      السنة {y}
                     </option>
                   ))}
                 </select>
               </div>
               <div className="mt-5 rounded-lg bg-sky-soft px-4 py-3 text-sm text-foreground font-reading">
-                {university.shortName} · {selectedMajor.name} · Year {year}
+                {university.shortName} · {selectedMajor.name} · السنة {year}
               </div>
             </div>
           )}
@@ -181,7 +185,7 @@ export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
               step === 0 ? "invisible" : ""
             }`}
           >
-            Back
+            رجوع
           </button>
           {step === 2 && (
             <button
@@ -189,7 +193,7 @@ export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
               onClick={handleSubmit}
               className="px-6 py-2.5 rounded-lg bg-teal text-white text-sm font-semibold hover:bg-teal-hover transition-colors cursor-pointer"
             >
-              Start studying
+              ابدأ المذاكرة
             </button>
           )}
         </div>

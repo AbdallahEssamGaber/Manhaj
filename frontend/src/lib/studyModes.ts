@@ -7,13 +7,13 @@ export interface StudyModeButton {
 }
 
 export const studyModeButtons: StudyModeButton[] = [
-  { mode: "flashcards", command: "/flashcards", label: "Flashcards" },
-  { mode: "quiz", command: "/quiz", label: "Quiz" },
-  { mode: "mockexam", command: "/mockexam", label: "Mock Exam" },
+  { mode: "flashcards", command: "/flashcards", label: "فلاش كارد" },
+  { mode: "quiz", command: "/quiz", label: "كويز" },
+  { mode: "mockexam", command: "/mockexam", label: "امتحان تجريبي" },
 ];
 
-export const topicPlaceholder = "Which lesson or topic should this cover?";
-export const questionPlaceholder = "Ask anything about this course...";
+export const topicPlaceholder = "عايز تغطي أنهي درس أو موضوع؟";
+export const questionPlaceholder = "اسأل أي سؤال عن المادة دي...";
 
 export function parseSlashCommand(input: string): { mode: StudyMode; topic: string } {
   const trimmed = input.trim();

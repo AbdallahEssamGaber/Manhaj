@@ -80,6 +80,8 @@ export interface University {
   bg: string;
   text: string;
   majors: Major[];
+  /** URL to the university's logo image, shown instead of the monogram when present */
+  logo?: string;
 }
 
 export interface StudyProfile {

@@ -94,18 +94,21 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-family: var(--font-archivo), Tahoma, system-ui, sans-serif;
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-archivo), system-ui, sans-serif;
-  letter-spacing: -0.01em;
+  font-family: var(--font-archivo), Tahoma, system-ui, sans-serif;
+  letter-spacing: 0;
 }
 
 /* Reading passages — answers, landing copy, onboarding descriptions —
-   get the serif so long-form text feels like a textbook, not a chat toy. */
+   get the Naskh serif so long-form text feels like a textbook, not a chat toy.
+   Arabic script needs looser leading than Latin to keep ascenders/descenders
+   and diacritic space from crowding. */
 .font-reading {
-  font-family: var(--font-spectral), Georgia, serif;
+  font-family: var(--font-spectral), Traditional Arabic, serif;
+  line-height: 1.9;
 }
 
 @keyframes dot-pulse {
@@ -114,7 +117,7 @@ h1, h2, h3, h4 {
 }
 
 @keyframes slide-in {
-  from { opacity: 0; transform: translateX(12px); }
+  from { opacity: 0; transform: translateX(-12px); }
   to { opacity: 1; transform: translateX(0); }
 }
 

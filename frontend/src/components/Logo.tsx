@@ -1,5 +1,5 @@
 interface LogoProps {
-  /** Show the "Manhaj" wordmark beneath the mark. */
+  /** Show the "منهج" wordmark beside the mark. */
   withWordmark?: boolean;
   /** Pixel height of the mark itself. */
   size?: number;
@@ -21,7 +21,7 @@ export function LogoMark({ size = 32, className = "" }: { size?: number; classNa
       fill="none"
       className={className}
       role="img"
-      aria-label="Manhaj"
+      aria-label="منهج"
     >
       <defs>
         <linearGradient id="manhaj-teal" x1="4" y1="36" x2="26" y2="8" gradientUnits="userSpaceOnUse">
@@ -67,10 +67,10 @@ export default function Logo({ withWordmark = true, size = 30, className = "" }:
       <LogoMark size={size} />
       {withWordmark && (
         <span
-          className="font-display font-bold tracking-tight text-foreground"
+          className="font-display font-bold text-foreground"
           style={{ fontSize: size * 0.62 }}
         >
-          Manhaj
+          منهج
         </span>
       )}
     </span>

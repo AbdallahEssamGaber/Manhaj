@@ -1,31 +1,33 @@
 import type { Metadata } from "next";
-import { Archivo, Spectral } from "next/font/google";
+import { IBM_Plex_Sans_Arabic, Amiri } from "next/font/google";
 import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
 
-const archivo = Archivo({
+const archivo = IBM_Plex_Sans_Arabic({
   variable: "--font-archivo",
-  subsets: ["latin"],
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const spectral = Spectral({
+const spectral = Amiri({
   variable: "--font-spectral",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  subsets: ["arabic"],
+  weight: ["400", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Manhaj — Study your actual curriculum",
-  description: "Ask, quiz, and drill on your real course material — answers cite the slide or exam they came from.",
+  title: "منهج — ذاكر بالمنهج بتاعك فعلاً",
+  description: "اسأل، اتمرن بالكويز والفلاش كارد على مادتك الحقيقية — كل إجابة بتتنقل للسلايد أو الامتحان اللي جايه منه.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="ar"
+      dir="rtl"
       className={`${archivo.variable} ${spectral.variable} h-full antialiased`}
       suppressHydrationWarning
     >

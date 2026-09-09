@@ -5,160 +5,160 @@ import type { FlashcardDeck, FlashcardItem, Quiz, QuizQuestion, MockExam } from 
 // generator below, so every subject in the curriculum stays functional.
 
 const curatedQuiz: Record<string, QuizQuestion[]> = {
-  "Data Structures": [
+  "هياكل البيانات": [
     {
-      prompt: "In a binary search tree, where do values smaller than a node live?",
-      options: ["In the left subtree", "In the right subtree", "In the root only", "They can't be smaller"],
+      prompt: "في شجرة البحث الثنائي (BST)، القيم الأصغر من أي عقدة بتكون فين؟",
+      options: ["في الشجرة الفرعية الشمال", "في الشجرة الفرعية اليمين", "في الجذر بس", "مينفعش تكون أصغر"],
       correctIndex: 0,
-      explanation: "BSTs keep every value in the left subtree smaller than the node, and every value in the right subtree larger.",
+      explanation: "شجرة البحث الثنائي بتحافظ على إن كل قيمة في الشجرة الشمال أصغر من العقدة، وكل قيمة في الشجرة اليمين أكبر منها.",
     },
     {
-      prompt: "What's the average time complexity of search in a balanced BST?",
+      prompt: "إيه متوسط تعقيد الوقت للبحث في شجرة BST متوازنة؟",
       options: ["O(n)", "O(log n)", "O(1)", "O(n log n)"],
       correctIndex: 1,
-      explanation: "A balanced tree halves the search space at each step, giving O(log n) average time.",
+      explanation: "الشجرة المتوازنة بتنصّ مساحة البحث في كل خطوة، فبتدي متوسط وقت O(log n).",
     },
     {
-      prompt: "Which structure is the backbone of a priority queue?",
-      options: ["Linked list", "Heap", "Hash table", "Stack"],
+      prompt: "أنهي بنية هي العمود الفقري لطابور الأولوية (priority queue)؟",
+      options: ["القائمة المرتبطة", "الكومة (Heap)", "جدول التجزئة (Hash table)", "المكدس (Stack)"],
       correctIndex: 1,
-      explanation: "Heaps keep the min (or max) element accessible in O(1) with O(log n) insert/remove.",
+      explanation: "الـ Heap بيخلي أصغر (أو أكبر) عنصر متاح في O(1)، والإضافة والحذف بياخدوا O(log n).",
     },
     {
-      prompt: "What happens to an unbalanced BST when values are inserted in sorted order?",
-      options: ["It stays balanced", "It degenerates into a linked list", "It becomes a heap", "It throws an error"],
+      prompt: "إيه اللي بيحصل لشجرة BST مش متوازنة لو القيم اتضافت مرتبة؟",
+      options: ["بتفضل متوازنة", "بتتحول لقائمة مرتبطة عملياً", "بتتحول لـ Heap", "بترمي خطأ"],
       correctIndex: 1,
-      explanation: "Sorted insertions give every node exactly one child, so lookups degrade to O(n).",
+      explanation: "الإضافة بترتيب بتخلي كل عقدة ليها ابن واحد بس، فالبحث بيبقى O(n).",
     },
     {
-      prompt: "Which traversal visits a BST's nodes in ascending order?",
+      prompt: "أنهي تجول (traversal) بيزور عُقد الـ BST بترتيب تصاعدي؟",
       options: ["Pre-order", "Post-order", "In-order", "Level-order"],
       correctIndex: 2,
-      explanation: "In-order traversal (left, node, right) visits values in sorted order for a BST.",
+      explanation: "الـ In-order (شمال، عقدة، يمين) بيزور القيم بترتيب تصاعدي في أي BST.",
     },
   ],
-  "Operating Systems": [
+  "نظم التشغيل": [
     {
-      prompt: "Which data structure does the OS use to track a process's state?",
-      options: ["File Allocation Table", "Process Control Block", "Page Table", "Interrupt Vector"],
+      prompt: "أنهي بنية بيانات بيستخدمها نظام التشغيل عشان يتابع حالة الـ process؟",
+      options: ["جدول تخصيص الملفات (FAT)", "كتلة التحكم في العملية (PCB)", "جدول الصفحات (Page Table)", "متجه المقاطعات (Interrupt Vector)"],
       correctIndex: 1,
-      explanation: "The PCB stores the program counter, registers, and scheduling info the OS needs to context-switch a process.",
+      explanation: "الـ PCB بيخزن عداد البرنامج والمسجلات ومعلومات الجدولة اللي محتاجها النظام عشان يعمل context switch للعملية.",
     },
     {
-      prompt: "What triggers a context switch?",
-      options: ["A variable going out of scope", "An interrupt or scheduling decision", "A compiler warning", "A page becoming clean"],
+      prompt: "إيه اللي بيسبب حدوث context switch؟",
+      options: ["متغير بيخرج من الـ scope", "مقاطعة (interrupt) أو قرار جدولة", "تحذير من الكومبايلر", "صفحة بترجع نضيفة"],
       correctIndex: 1,
-      explanation: "Interrupts, system calls, and the scheduler's timeslice expiry are the classic triggers.",
+      explanation: "المقاطعات، ونداءات النظام، وانتهاء الوقت المخصص من الجدولة، دي الأسباب الكلاسيكية.",
     },
     {
-      prompt: "What is thrashing?",
-      options: ["A CPU overheating", "Excessive paging that stalls progress", "A deadlock between two locks", "A full disk"],
+      prompt: "إيه هو الـ thrashing؟",
+      options: ["ارتفاع حرارة المعالج", "تبديل صفحات زيادة عن اللازم بيوقف التقدم", "تعارض بين قفلين (deadlock)", "امتلاء القرص"],
       correctIndex: 1,
-      explanation: "Thrashing happens when the system spends more time swapping pages than executing.",
+      explanation: "الـ thrashing بيحصل لما النظام بيقضي وقت في تبديل الصفحات أكتر من وقت التنفيذ الفعلي.",
     },
     {
-      prompt: "Which condition is NOT required for deadlock?",
-      options: ["Mutual exclusion", "Hold and wait", "Preemption", "Circular wait"],
+      prompt: "أنهي شرط مش لازم يتحقق عشان يحصل deadlock؟",
+      options: ["الاستئثار المتبادل (Mutual exclusion)", "الاحتفاظ والانتظار (Hold and wait)", "الانتزاع (Preemption)", "الانتظار الدائري (Circular wait)"],
       correctIndex: 2,
-      explanation: "Deadlock requires no preemption — resources can't be forcibly taken away.",
+      explanation: "الـ deadlock بيحتاج عدم وجود انتزاع — يعني الموارد مينفعش تتاخد بالقوة.",
     },
     {
-      prompt: "What does a semaphore's wait() operation do when the value is 0?",
-      options: ["Returns immediately", "Blocks the calling process", "Increments the value", "Terminates the process"],
+      prompt: "عملية wait() في الـ semaphore بتعمل إيه لما القيمة تبقى صفر؟",
+      options: ["بترجع فوراً", "بتوقف (block) العملية اللي نادتها", "بتزود القيمة", "بتنهي العملية"],
       correctIndex: 1,
-      explanation: "wait() blocks until another process calls signal() and raises the value above 0.",
+      explanation: "الـ wait() بتفضل واقفة لحد ما عملية تانية تنادي signal() وترفع القيمة فوق الصفر.",
     },
   ],
-  "Database Systems": [
+  "قواعد البيانات": [
     {
-      prompt: "A table in 2NF but not 3NF has what kind of dependency?",
-      options: ["Partial dependency", "Transitive dependency", "No dependency", "Circular dependency"],
+      prompt: "الجدول اللي في 2NF بس مش في 3NF فيه أنهي نوع اعتمادية؟",
+      options: ["اعتمادية جزئية", "اعتمادية عابرة (Transitive)", "من غير اعتمادية", "اعتمادية دائرية"],
       correctIndex: 1,
-      explanation: "3NF removes transitive dependencies — a non-key attribute depending on another non-key attribute.",
+      explanation: "الـ 3NF بتشيل الاعتماديات العابرة — يعني عمود مش مفتاح بيعتمد على عمود تاني مش مفتاح.",
     },
     {
-      prompt: "What does BCNF strengthen compared to 3NF?",
-      options: ["Nothing, they're identical", "Every determinant must be a candidate key", "Foreign keys become optional", "Tables must have one column"],
+      prompt: "الـ BCNF بيقوّي إيه بالمقارنة بالـ 3NF؟",
+      options: ["مفيش فرق، هما نفس الحاجة", "كل مُحدِّد (determinant) لازم يكون مفتاح مرشح", "المفتاح الأجنبي بيبقى اختياري", "الجدول لازم يكون عمود واحد بس"],
       correctIndex: 1,
-      explanation: "BCNF closes the edge case 3NF misses: every determinant of a functional dependency must be a candidate key.",
+      explanation: "الـ BCNF بتقفل الثغرة اللي الـ 3NF مش بتغطيها: كل مُحدِّد لأي اعتمادية وظيفية لازم يكون مفتاح مرشح.",
     },
     {
-      prompt: "Which SQL clause filters groups after aggregation?",
+      prompt: "أنهي جملة SQL بتفلتر المجموعات بعد التجميع؟",
       options: ["WHERE", "HAVING", "GROUP BY", "ORDER BY"],
       correctIndex: 1,
-      explanation: "WHERE filters rows before grouping; HAVING filters the resulting groups.",
+      explanation: "الـ WHERE بتفلتر الصفوف قبل التجميع؛ الـ HAVING بتفلتر المجموعات الناتجة.",
     },
     {
-      prompt: "What property guarantees a transaction is all-or-nothing?",
-      options: ["Isolation", "Durability", "Atomicity", "Consistency"],
+      prompt: "أنهي خاصية بتضمن إن المعاملة (transaction) تتم كلها أو ملهاش أي أثر؟",
+      options: ["العزل (Isolation)", "الدوام (Durability)", "الذرية (Atomicity)", "التناسق (Consistency)"],
       correctIndex: 2,
-      explanation: "Atomicity means a transaction's operations either all commit or all roll back.",
+      explanation: "الذرية معناها إن عمليات المعاملة إما تتنفذ كلها أو ترجع كلها.",
     },
     {
-      prompt: "A foreign key enforces what kind of constraint?",
-      options: ["Domain integrity", "Referential integrity", "Entity integrity", "Null constraint"],
+      prompt: "المفتاح الأجنبي بيفرض أنهي نوع قيود؟",
+      options: ["سلامة النطاق", "السلامة المرجعية (Referential integrity)", "سلامة الكيان", "قيد الـ Null"],
       correctIndex: 1,
-      explanation: "Foreign keys ensure a referenced row actually exists in the parent table.",
+      explanation: "المفتاح الأجنبي بيتأكد إن الصف اللي بيتم الإشارة له موجود فعلاً في الجدول الأب.",
     },
   ],
-  "Software Engineering": [
+  "هندسة البرمجيات": [
     {
-      prompt: "In Scrum, what is a sprint retrospective for?",
-      options: ["Estimating story points", "Reflecting on the last sprint to improve process", "Assigning next sprint's tasks", "Demoing to stakeholders"],
+      prompt: "في الـ Scrum، الغرض من الـ sprint retrospective إيه؟",
+      options: ["تقدير الـ story points", "مراجعة السبرنت اللي فات عشان تحسّن الأداء", "توزيع مهام السبرنت الجاي", "عرض الشغل لأصحاب المصلحة"],
       correctIndex: 1,
-      explanation: "The retrospective is where the team reflects on what went well or badly, separate from the sprint review demo.",
+      explanation: "الـ retrospective هو الاجتماع اللي الفريق بيراجع فيه اللي مشى كويس واللي مشيش، وده مختلف عن عرض الـ sprint review.",
     },
     {
-      prompt: "Which artifact represents a unit of user-facing functionality in Agile?",
-      options: ["A user story", "A Gantt chart", "A UML diagram", "A build script"],
+      prompt: "أنهي عنصر بيمثل وحدة من الوظائف اللي المستخدم بيشوفها في الـ Agile؟",
+      options: ["قصة المستخدم (User story)", "مخطط جانت", "مخطط UML", "سكريبت بناء"],
       correctIndex: 0,
-      explanation: "User stories describe a feature from the user's perspective and are the base unit of Agile planning.",
+      explanation: "قصص المستخدم بتوصف الميزة من وجهة نظر المستخدم، وهي الوحدة الأساسية للتخطيط في الـ Agile.",
     },
     {
-      prompt: "What does the Single Responsibility Principle state?",
-      options: ["A class should have one reason to change", "A class should do everything", "Classes should never be reused", "Every method must be static"],
+      prompt: "مبدأ المسؤولية الواحدة (SRP) بيقول إيه؟",
+      options: ["الكلاس لازم يكون ليه سبب واحد بس للتغيير", "الكلاس لازم يعمل كل حاجة", "الكلاسات ميتعادش استخدامها تاني", "كل method لازم تكون static"],
       correctIndex: 0,
-      explanation: "SRP keeps a class focused on one job, making it easier to change without ripple effects.",
+      explanation: "الـ SRP بيخلي الكلاس مركّز على مهمة واحدة، وده بيسهّل تعديله من غير ما يأثر على حاجات تانية.",
     },
     {
-      prompt: "What is the main purpose of a code review?",
-      options: ["Slow down releases", "Catch bugs and share knowledge before merge", "Replace testing", "Assign blame"],
+      prompt: "إيه الغرض الأساسي من مراجعة الكود (code review)؟",
+      options: ["إبطاء عملية الإصدار", "اكتشاف الأخطاء ونشر المعرفة قبل الدمج", "استبدال الاختبار", "توزيع اللوم"],
       correctIndex: 1,
-      explanation: "Reviews catch issues early and spread context across the team.",
+      explanation: "المراجعة بتكتشف المشاكل بدري وبتنشر الفهم بين أعضاء الفريق.",
     },
     {
-      prompt: "Which testing level checks that independently-working modules work together?",
-      options: ["Unit testing", "Integration testing", "Acceptance testing", "Smoke testing"],
+      prompt: "أنهي مستوى اختبار بيتأكد إن الموديولات اللي شغالة لوحدها بتشتغل مع بعض صح؟",
+      options: ["اختبار الوحدة (Unit)", "اختبار التكامل (Integration)", "اختبار القبول (Acceptance)", "اختبار الدخان (Smoke)"],
       correctIndex: 1,
-      explanation: "Integration tests verify that modules that pass unit tests individually also cooperate correctly.",
+      explanation: "اختبارات التكامل بتتأكد إن الموديولات اللي عدّت اختبار الوحدة لوحدها بتشتغل صح مع بعض.",
     },
   ],
 };
 
 const curatedCards: Record<string, FlashcardItem[]> = {
-  "Data Structures": [
-    { front: "What is a binary search tree?", back: "A binary tree where every left-subtree value is smaller and every right-subtree value is larger than its parent." },
-    { front: "Worst case for an unbalanced BST?", back: "O(n) — sorted-order insertion degenerates the tree into a linked list." },
-    { front: "What is a heap used for?", back: "Efficiently tracking the min or max element — the backbone of priority queues and heapsort." },
-    { front: "Stack vs. queue?", back: "A stack is LIFO (last in, first out); a queue is FIFO (first in, first out)." },
+  "هياكل البيانات": [
+    { front: "إيه هي شجرة البحث الثنائي (BST)؟", back: "شجرة ثنائية كل قيمة في الشجرة الشمال بتاعتها أصغر من الأب، وكل قيمة في الشجرة اليمين أكبر منه." },
+    { front: "أسوأ حالة لشجرة BST مش متوازنة؟", back: "O(n) — الإضافة بترتيب بتحوّل الشجرة عملياً لقائمة مرتبطة." },
+    { front: "الـ Heap بيتستخدم في إيه؟", back: "متابعة أصغر أو أكبر عنصر بكفاءة — وهو العمود الفقري لطابور الأولوية وخوارزمية heapsort." },
+    { front: "الفرق بين Stack و Queue؟", back: "الـ Stack بيشتغل بنظام LIFO (آخر داخل أول خارج)؛ والـ Queue بيشتغل بنظام FIFO (أول داخل أول خارج)." },
   ],
-  "Operating Systems": [
-    { front: "What is a process?", back: "An instance of a program in execution: its code, program counter, stack, data section, and heap." },
-    { front: "What does the scheduler decide?", back: "Which ready process gets the CPU next, and for how long." },
-    { front: "What is a deadlock?", back: "A cycle of processes each waiting on a resource held by the next, so none can proceed." },
-    { front: "Paging vs. segmentation?", back: "Paging splits memory into fixed-size frames; segmentation splits it into variable-size logical units." },
+  "نظم التشغيل": [
+    { front: "إيه هي الـ process؟", back: "نسخة من برنامج بيتنفذ فعلياً: بالكود بتاعه، وعداد البرنامج، والـ stack، وقسم البيانات، والـ heap." },
+    { front: "المجدول (scheduler) بيقرر إيه؟", back: "أنهي عملية جاهزة هتاخد المعالج بعد كده، ولحد إمتى." },
+    { front: "إيه هو الـ deadlock؟", back: "دورة من العمليات كل واحدة مستنية مورد ممسوك من العملية اللي بعدها، فمفيش حد يقدر يكمل." },
+    { front: "الفرق بين الـ Paging و الـ Segmentation؟", back: "الـ Paging بيقسّم الذاكرة لإطارات بحجم ثابت؛ والـ Segmentation بيقسّمها لوحدات منطقية بحجم متغير." },
   ],
-  "Database Systems": [
-    { front: "What is normalization?", back: "Organizing tables to reduce redundancy, usually by working through 1NF → 2NF → 3NF → BCNF." },
-    { front: "What is a transitive dependency?", back: "When a non-key attribute depends on another non-key attribute, rather than the primary key directly." },
-    { front: "ACID stands for?", back: "Atomicity, Consistency, Isolation, Durability — the guarantees a transaction provides." },
-    { front: "Primary key vs. foreign key?", back: "A primary key uniquely identifies a row; a foreign key references a primary key in another table." },
+  "قواعد البيانات": [
+    { front: "إيه هو التطبيع (Normalization)؟", back: "تنظيم الجداول عشان تقلل التكرار، غالباً بالمرور بـ 1NF → 2NF → 3NF → BCNF." },
+    { front: "إيه هي الاعتمادية العابرة (Transitive)؟", back: "لما عمود مش مفتاح بيعتمد على عمود تاني مش مفتاح، بدل ما يعتمد على المفتاح الأساسي مباشرة." },
+    { front: "الـ ACID اختصار لإيه؟", back: "الذرية، التناسق، العزل، الدوام — الضمانات اللي بتوفرها أي معاملة." },
+    { front: "الفرق بين المفتاح الأساسي والمفتاح الأجنبي؟", back: "المفتاح الأساسي بيميّز الصف بشكل فريد؛ والمفتاح الأجنبي بيشاور على مفتاح أساسي في جدول تاني." },
   ],
-  "Software Engineering": [
-    { front: "What is Agile?", back: "An iterative approach emphasizing flexibility, collaboration, and frequent customer feedback." },
-    { front: "Scrum vs. Kanban?", back: "Scrum uses fixed-length sprints with defined roles; Kanban is continuous flow visualized on a board." },
-    { front: "What is technical debt?", back: "The implied cost of extra rework caused by choosing an easy fix now over a better long-term approach." },
-    { front: "What is a design pattern?", back: "A reusable, named solution to a common design problem — e.g. Singleton, Observer, Factory." },
+  "هندسة البرمجيات": [
+    { front: "إيه هو الـ Agile؟", back: "منهجية تكرارية بتركز على المرونة والتعاون وأخد فيدباك مستمر من العميل." },
+    { front: "الفرق بين Scrum و Kanban؟", back: "الـ Scrum بيستخدم سبرنتات بمدة ثابتة وأدوار محددة؛ والـ Kanban تدفق مستمر بيتعرض على لوحة." },
+    { front: "إيه هو الـ Technical Debt؟", back: "التكلفة الضمنية لشغل إضافي بيحصل بسبب اختيار حل سريع دلوقتي بدل حل أفضل على المدى الطويل." },
+    { front: "إيه هو الـ Design Pattern؟", back: "حل قابل لإعادة الاستخدام وله اسم لمشكلة تصميم شائعة — زي Singleton و Observer و Factory." },
   ],
 };
 
@@ -172,39 +172,39 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 const templateAnswers = [
-  "the mechanism covered in this week's lecture",
-  "the definition given in the course notes",
-  "the process described in the assigned reading",
-  "the formula introduced in this topic",
-  "the concept your professor emphasized on the slide",
+  "الآلية اللي اتشرحت في محاضرة الأسبوع ده",
+  "التعريف اللي موجود في مذكرة المادة",
+  "العملية اللي موصوفة في القراءة المطلوبة",
+  "المعادلة اللي اتقدمت في الموضوع ده",
+  "المفهوم اللي الدكتور ركّز عليه في السلايد",
 ];
 
 function templatedQuestion(subject: string, topic: string, n: number): QuizQuestion {
-  const correct = `It refers to ${templateAnswers[n % templateAnswers.length]} for "${topic}".`;
+  const correct = `المقصود بيه هو ${templateAnswers[n % templateAnswers.length]} بخصوص "${topic}".`;
   const distractors = [
-    `It's unrelated to ${topic} and belongs to a different unit.`,
-    `It's the opposite of what "${topic}" describes.`,
-    `It only applies outside the scope of ${subject}.`,
+    `مالوش علاقة بـ "${topic}" وبيتبع وحدة تانية.`,
+    `عكس اللي "${topic}" بيوصفه تماماً.`,
+    `بينطبق بس برّه نطاق مادة ${subject}.`,
   ];
   const options = shuffle([correct, ...distractors]);
   return {
-    prompt: `Which statement best describes "${topic}" in ${subject}?`,
+    prompt: `أنهي عبارة بتوصف "${topic}" في مادة ${subject} بأحسن شكل؟`,
     options,
     correctIndex: options.indexOf(correct),
-    explanation: `Review the section on "${topic}" in your ${subject} material — this is exactly the kind of recall question it tests.`,
+    explanation: `راجع الجزء الخاص بـ "${topic}" في مادة ${subject} — ده بالظبط نوع سؤال الاسترجاع اللي بيتم اختباره.`,
   };
 }
 
 function templatedCard(subject: string, topic: string, n: number): FlashcardItem {
   const fronts = [
-    `Define "${topic}".`,
-    `Why does "${topic}" matter in ${subject}?`,
-    `Give an example of "${topic}" in practice.`,
-    `What's a common mistake with "${topic}"?`,
+    `عرّف "${topic}".`,
+    `ليه "${topic}" مهم في مادة ${subject}؟`,
+    `اديني مثال عملي على "${topic}".`,
+    `إيه الغلطة الشائعة في "${topic}"؟`,
   ];
   return {
     front: fronts[n % fronts.length],
-    back: `Pulled from your ${subject} material on "${topic}" — connect the real RAG backend to get the actual definition and source.`,
+    back: `مسحوب من مادة ${subject} بتاعتك عن "${topic}" — لما توصل الـ RAG backend الحقيقي هتاخد التعريف والمصدر الفعلي.`,
   };
 }
 

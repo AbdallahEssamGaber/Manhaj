@@ -2,13 +2,13 @@ import type { Subject } from "@/types";
 
 export function monogram(name: string): string {
   const words = name.split(/\s+/).filter(Boolean);
-  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
-  return (words[0][0] + words[1][0]).toUpperCase();
+  if (words.length === 1) return words[0].slice(0, 2);
+  return words[0][0] + words[1][0];
 }
 
 function subjects(names: string[]): Subject[] {
   return names.map((name) => ({
-    id: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    id: name.trim().replace(/\s+/g, "-"),
     name,
     monogram: monogram(name),
   }));
@@ -18,56 +18,56 @@ function subjects(names: string[]): Subject[] {
 // across universities — a real backend would map this per school.
 const curriculum: Record<string, string[][]> = {
   cs: [
-    ["Intro to Programming", "Discrete Math", "Calculus I", "Digital Logic"],
-    ["Data Structures", "Object-Oriented Programming", "Linear Algebra", "Computer Architecture"],
-    ["Algorithms", "Operating Systems", "Database Systems", "Probability & Statistics"],
-    ["Software Engineering", "Computer Networks", "Artificial Intelligence", "Graduation Project"],
+    ["مقدمة في البرمجة", "الرياضيات المتقطعة", "التفاضل والتكامل ١", "الدوائر المنطقية"],
+    ["هياكل البيانات", "البرمجة الشيئية", "الجبر الخطي", "تنظيم الحاسبات"],
+    ["الخوارزميات", "نظم التشغيل", "قواعد البيانات", "الاحتمالات والإحصاء"],
+    ["هندسة البرمجيات", "شبكات الحاسب", "الذكاء الاصطناعي", "مشروع التخرج"],
   ],
   engineering: [
-    ["Calculus I", "Physics I", "Engineering Drawing", "Chemistry"],
-    ["Calculus II", "Physics II", "Statics", "Electric Circuits"],
-    ["Thermodynamics", "Fluid Mechanics", "Materials Science", "Numerical Methods"],
-    ["Control Systems", "Machine Design", "Signals & Systems", "Engineering Economics"],
-    ["Senior Design Project", "Industrial Management", "Elective I", "Elective II"],
+    ["التفاضل والتكامل ١", "الفيزياء ١", "الرسم الهندسي", "الكيمياء"],
+    ["التفاضل والتكامل ٢", "الفيزياء ٢", "الاستاتيكا", "الدوائر الكهربية"],
+    ["الديناميكا الحرارية", "ميكانيكا الموائع", "علم المواد", "التحليل العددي"],
+    ["نظم التحكم", "تصميم الآلات", "الإشارات والنظم", "الاقتصاد الهندسي"],
+    ["مشروع التخرج", "الإدارة الصناعية", "مادة اختيارية ١", "مادة اختيارية ٢"],
   ],
   business: [
-    ["Principles of Management", "Microeconomics", "Business Math", "Financial Accounting"],
-    ["Macroeconomics", "Marketing Principles", "Managerial Accounting", "Business Statistics"],
-    ["Corporate Finance", "Operations Management", "Organizational Behavior", "Business Law"],
-    ["Strategic Management", "Entrepreneurship", "International Business", "Capstone Project"],
+    ["مبادئ الإدارة", "الاقتصاد الجزئي", "رياضيات إدارة الأعمال", "المحاسبة المالية"],
+    ["الاقتصاد الكلي", "مبادئ التسويق", "المحاسبة الإدارية", "إحصاء الأعمال"],
+    ["تمويل الشركات", "إدارة العمليات", "السلوك التنظيمي", "القانون التجاري"],
+    ["الإدارة الاستراتيجية", "ريادة الأعمال", "الأعمال الدولية", "مشروع التخرج"],
   ],
   medicine: [
-    ["Human Anatomy I", "Biochemistry", "Medical Physics", "Histology"],
-    ["Human Anatomy II", "Physiology", "Genetics", "Embryology"],
-    ["Pathology", "Microbiology", "Pharmacology I", "Immunology"],
-    ["Pharmacology II", "Internal Medicine I", "Surgery I", "Community Medicine"],
-    ["Internal Medicine II", "Surgery II", "Pediatrics", "Obstetrics & Gynecology"],
-    ["Clinical Rotations", "Psychiatry", "Emergency Medicine", "Graduation Thesis"],
+    ["التشريح ١", "الكيمياء الحيوية", "الفيزياء الطبية", "الأنسجة"],
+    ["التشريح ٢", "الفسيولوجي", "علم الوراثة", "علم الأجنة"],
+    ["الباثولوجي", "الميكروبيولوجي", "الفارماكولوجي ١", "المناعة"],
+    ["الفارماكولوجي ٢", "الباطنة ١", "الجراحة ١", "طب المجتمع"],
+    ["الباطنة ٢", "الجراحة ٢", "طب الأطفال", "النساء والتوليد"],
+    ["التدريب الإكلينيكي", "الطب النفسي", "طب الطوارئ", "رسالة التخرج"],
   ],
   pharmacy: [
-    ["General Chemistry", "Human Anatomy", "Biology", "Math for Pharmacy"],
-    ["Organic Chemistry", "Physiology", "Analytical Chemistry", "Microbiology"],
-    ["Pharmaceutics I", "Medicinal Chemistry I", "Pharmacology I", "Biochemistry"],
-    ["Pharmaceutics II", "Medicinal Chemistry II", "Pharmacology II", "Clinical Pharmacy I"],
-    ["Industrial Pharmacy", "Clinical Pharmacy II", "Pharmacy Practice", "Graduation Project"],
+    ["الكيمياء العامة", "التشريح", "الأحياء", "رياضيات الصيدلة"],
+    ["الكيمياء العضوية", "الفسيولوجي", "الكيمياء التحليلية", "الميكروبيولوجي"],
+    ["الصيدلانيات ١", "الكيمياء الدوائية ١", "الفارماكولوجي ١", "الكيمياء الحيوية"],
+    ["الصيدلانيات ٢", "الكيمياء الدوائية ٢", "الفارماكولوجي ٢", "الصيدلة الإكلينيكية ١"],
+    ["الصيدلة الصناعية", "الصيدلة الإكلينيكية ٢", "ممارسة الصيدلة", "مشروع التخرج"],
   ],
   law: [
-    ["Introduction to Law", "Constitutional Law", "Roman Law", "Legal History"],
-    ["Civil Law", "Criminal Law", "Administrative Law", "International Law"],
-    ["Commercial Law", "Labor Law", "Criminal Procedure", "Civil Procedure"],
-    ["Evidence Law", "Public International Law", "Legal Drafting", "Moot Court"],
+    ["مدخل للقانون", "القانون الدستوري", "القانون الروماني", "تاريخ القانون"],
+    ["القانون المدني", "قانون العقوبات", "القانون الإداري", "القانون الدولي"],
+    ["القانون التجاري", "قانون العمل", "الإجراءات الجنائية", "المرافعات المدنية"],
+    ["قانون الإثبات", "القانون الدولي العام", "الصياغة القانونية", "المحاكاة القضائية"],
   ],
   arts: [
-    ["Introduction to Philosophy", "World History", "English Literature I", "Sociology"],
-    ["Linguistics", "English Literature II", "Cultural Studies", "Psychology"],
-    ["Comparative Literature", "Media Studies", "Research Methods", "Anthropology"],
-    ["Modern Criticism", "Translation Studies", "Thesis Seminar", "Elective"],
+    ["مدخل للفلسفة", "تاريخ العالم", "الأدب الإنجليزي ١", "علم الاجتماع"],
+    ["علم اللغة", "الأدب الإنجليزي ٢", "الدراسات الثقافية", "علم النفس"],
+    ["الأدب المقارن", "دراسات الإعلام", "مناهج البحث", "الأنثروبولوجيا"],
+    ["النقد الحديث", "دراسات الترجمة", "سيمينار الرسالة", "مادة اختيارية"],
   ],
 };
 
 export function subjectsFor(majorId: string, year: number): Subject[] {
   const years = curriculum[majorId];
-  if (!years) return subjects(["Core Subject 1", "Core Subject 2", "Core Subject 3", "Core Subject 4"]);
+  if (!years) return subjects(["مادة أساسية ١", "مادة أساسية ٢", "مادة أساسية ٣", "مادة أساسية ٤"]);
   const names = years[Math.min(Math.max(year, 1), years.length) - 1] ?? years[years.length - 1];
   return subjects(names);
 }
