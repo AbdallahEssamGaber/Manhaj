@@ -38,17 +38,17 @@ export default function QuizBlock({ quiz }: { quiz: Quiz }) {
     const pct = Math.round((correctCount / quiz.questions.length) * 100);
     return (
       <div className="w-full text-center py-2">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-light">Quiz · {quiz.topic}</span>
+        <span className="text-[11px] font-semibold text-muted-light">كويز · {quiz.topic}</span>
         <p className="font-display text-3xl font-bold text-foreground mt-3">
           {correctCount}/{quiz.questions.length}
         </p>
-        <p className="text-sm text-muted mt-1">{pct}% correct</p>
+        <p className="text-sm text-muted mt-1">{pct}% صح</p>
         <button
           type="button"
           onClick={retake}
           className="mt-4 px-4 py-2 rounded-md border border-border text-sm font-medium text-foreground hover:bg-surface-hover transition-colors cursor-pointer"
         >
-          Retake quiz
+          أعد الكويز
         </button>
       </div>
     );
@@ -57,7 +57,7 @@ export default function QuizBlock({ quiz }: { quiz: Quiz }) {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-3">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-light">Quiz · {quiz.topic}</span>
+        <span className="text-[11px] font-semibold text-muted-light">كويز · {quiz.topic}</span>
         <span className="text-[11px] font-medium text-muted-light">
           {index + 1} / {quiz.questions.length}
         </span>
@@ -80,7 +80,7 @@ export default function QuizBlock({ quiz }: { quiz: Quiz }) {
               type="button"
               disabled={selected !== null}
               onClick={() => choose(i)}
-              className={`w-full text-left text-sm px-3 py-2 rounded-md border transition-colors cursor-pointer disabled:cursor-default ${state}`}
+              className={`w-full text-right text-sm px-3 py-2 rounded-md border transition-colors cursor-pointer disabled:cursor-default ${state}`}
             >
               {opt}
             </button>
@@ -96,7 +96,7 @@ export default function QuizBlock({ quiz }: { quiz: Quiz }) {
             onClick={next}
             className="shrink-0 px-3.5 py-1.5 rounded-md bg-teal text-white text-xs font-semibold hover:bg-teal-hover transition-colors cursor-pointer"
           >
-            {isLast ? "See score" : "Next"}
+            {isLast ? "شوف نتيجتك" : "التالي"}
           </button>
         </div>
       )}

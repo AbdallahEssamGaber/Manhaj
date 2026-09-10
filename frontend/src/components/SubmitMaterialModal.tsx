@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
-import { db, isConfigured } from "@/lib/firebase";
 import type { University } from "@/types";
 
 interface SubmitMaterialModalProps {
@@ -10,7 +8,7 @@ interface SubmitMaterialModalProps {
   onClose: () => void;
 }
 
-const materialTypes = ["Lecture slides", "Past exam", "Lecture notes", "Curriculum / syllabus", "Other"];
+const materialTypes = ["سلايدات محاضرة", "امتحان سابق", "مذكرة محاضرة", "منهج / توصيف المادة", "حاجة تانية"];
 
 export default function SubmitMaterialModal({ university, onClose }: SubmitMaterialModalProps) {
   const [subject, setSubject] = useState("");
@@ -23,21 +21,7 @@ export default function SubmitMaterialModal({ university, onClose }: SubmitMater
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitting(true);
-    if (isConfigured && db) {
-      try {
-        await addDoc(collection(db, "materialSubmissions"), {
-          universityId: university?.id ?? null,
-          universityName: university?.name ?? null,
-          subject,
-          type,
-          fileName,
-          notes,
-          createdAt: Date.now(),
-        });
-      } catch {
-        // best effort — still show the confirmation, this is a review queue not a critical path
-      }
-    }
+    // TODO: wire up to a real submissions backend/review queue.
     setSubmitting(false);
     setSubmitted(true);
   }
@@ -46,12 +30,12 @@ export default function SubmitMaterialModal({ university, onClose }: SubmitMater
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy/40 backdrop-blur-sm p-4">
       <div className="w-full max-w-md rounded-2xl border border-border bg-surface shadow-[0_30px_70px_-25px_oklch(0.28_0.06_258_/_0.35)] overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-border-light">
-          <h2 className="text-sm font-semibold text-foreground">Submit course material</h2>
+          <h2 className="text-sm font-semibold text-foreground">قدّم مادة كورس</h2>
           <button
             type="button"
             onClick={onClose}
             className="p-1 rounded-md text-muted-light hover:text-foreground hover:bg-surface-hover transition-colors cursor-pointer"
-            aria-label="Close"
+            aria-label="إغلاق"
           >
             <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -66,35 +50,35 @@ export default function SubmitMaterialModal({ university, onClose }: SubmitMater
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <p className="text-sm font-semibold text-foreground">Thanks — it&apos;s in the review queue.</p>
-            <p className="text-sm text-muted mt-1 font-reading">We&apos;ll verify it against the source before adding it to {university?.shortName ?? "your"} materials.</p>
+            <p className="text-sm font-semibold text-foreground">تمام — دخلت قائمة المراجعة.</p>
+            <p className="text-sm text-muted mt-1 font-reading">هنتأكد منها من المصدر قبل ما نضيفها لمواد {university?.shortName ?? "جامعتك"}.</p>
             <button
               type="button"
               onClick={onClose}
               className="mt-5 px-4 py-2 rounded-md border border-border text-sm font-medium text-foreground hover:bg-surface-hover transition-colors cursor-pointer"
             >
-              Done
+              تمام
             </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
             <p className="text-xs text-muted font-reading">
-              Sharing your {university?.name ?? "university's"} slides, past exams, or notes helps Manhaj answer accurately for everyone on your course.
+              مشاركة سلايدات أو امتحانات أو مذكرات {university?.name ?? "جامعتك"} بتساعد منهج يجاوب صح لكل زمايلك في الكورس.
             </p>
 
             <div>
-              <label className="block text-xs font-medium text-muted mb-1.5">Subject</label>
+              <label className="block text-xs font-medium text-muted mb-1.5">المادة</label>
               <input
                 required
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                placeholder="e.g. Data Structures"
+                placeholder="مثلاً هياكل البيانات"
                 className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder-muted-light focus:outline-none focus:ring-2 focus:ring-teal/40 focus:border-teal transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-muted mb-1.5">Material type</label>
+              <label className="block text-xs font-medium text-muted mb-1.5">نوع المادة</label>
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
@@ -109,9 +93,9 @@ export default function SubmitMaterialModal({ university, onClose }: SubmitMater
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-muted mb-1.5">File</label>
+              <label className="block text-xs font-medium text-muted mb-1.5">الملف</label>
               <label className="flex items-center justify-between rounded-md border border-dashed border-border px-3 py-2.5 text-sm text-muted-light hover:border-teal hover:text-teal transition-colors cursor-pointer">
-                <span className="truncate">{fileName ?? "Choose a PDF, slide deck, or doc..."}</span>
+                <span className="truncate">{fileName ?? "اختار ملف PDF أو سلايدات أو مستند..."}</span>
                 <input
                   type="file"
                   className="hidden"
@@ -121,12 +105,12 @@ export default function SubmitMaterialModal({ university, onClose }: SubmitMater
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-muted mb-1.5">Notes (optional)</label>
+              <label className="block text-xs font-medium text-muted mb-1.5">ملاحظات (اختياري)</label>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={2}
-                placeholder="Which course, professor, or term is this from?"
+                placeholder="أنهي كورس أو دكتور أو ترم ده بتاع؟"
                 className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder-muted-light focus:outline-none focus:ring-2 focus:ring-teal/40 focus:border-teal transition-colors"
               />
             </div>
@@ -136,7 +120,7 @@ export default function SubmitMaterialModal({ university, onClose }: SubmitMater
               disabled={submitting || !subject}
               className="w-full py-2.5 rounded-md bg-teal text-white text-sm font-semibold hover:bg-teal-hover disabled:opacity-50 transition-colors cursor-pointer"
             >
-              {submitting ? "Submitting..." : "Submit for review"}
+              {submitting ? "جاري الإرسال..." : "قدّم للمراجعة"}
             </button>
           </form>
         )}

@@ -25,7 +25,7 @@ export default function SignupPage() {
     e.preventDefault();
     setError("");
     if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
+      setError("الباسورد لازم يكون 6 حروف على الأقل.");
       return;
     }
     setSubmitting(true);
@@ -35,13 +35,13 @@ export default function SignupPage() {
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Sign up failed";
       if (message.includes("email-already-in-use")) {
-        setError("An account with this email already exists — try signing in instead.");
+        setError("فيه حساب بالإيميل ده خلاص — جرب تسجّل دخول بدل كده.");
       } else if (message.includes("weak-password")) {
-        setError("Password is too weak. Use at least 6 characters.");
+        setError("الباسورد ضعيف. استخدم 6 حروف على الأقل.");
       } else if (message.includes("invalid-email")) {
-        setError("Please enter a valid email address.");
+        setError("اكتب إيميل صحيح.");
       } else {
-        setError("Sign up failed. Please try again.");
+        setError("التسجيل مانفعش. جرب تاني.");
       }
     } finally {
       setSubmitting(false);
@@ -56,18 +56,18 @@ export default function SignupPage() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <h1 className="text-center text-lg font-semibold text-foreground mb-6">Create your account</h1>
+          <h1 className="text-center text-lg font-semibold text-foreground mb-6">اعمل حساب جديد</h1>
 
           {error && <p className="text-sm text-incorrect mb-5">{error}</p>}
           {user?.isAnonymous && (
             <p className="text-xs text-teal bg-teal-soft rounded-md px-3 py-2 mb-5 font-reading">
-              Your trial chats will carry over once you sign up.
+              محادثات التجربة هتفضل موجودة لما تسجّل حساب.
             </p>
           )}
 
           <div>
             <label htmlFor="name" className="block text-xs font-medium text-muted mb-1.5">
-              Name
+              الاسم
             </label>
             <input
               id="name"
@@ -76,13 +76,13 @@ export default function SignupPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-foreground placeholder-muted-light focus:outline-none focus:ring-2 focus:ring-teal/40 focus:border-teal transition-colors"
-              placeholder="Your name"
+              placeholder="اسمك"
             />
           </div>
 
           <div className="mt-5">
             <label htmlFor="email" className="block text-xs font-medium text-muted mb-1.5">
-              Email
+              الإيميل
             </label>
             <input
               id="email"
@@ -97,7 +97,7 @@ export default function SignupPage() {
 
           <div className="mt-5">
             <label htmlFor="password" className="block text-xs font-medium text-muted mb-1.5">
-              Password
+              الباسورد
             </label>
             <input
               id="password"
@@ -106,7 +106,7 @@ export default function SignupPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-foreground placeholder-muted-light focus:outline-none focus:ring-2 focus:ring-teal/40 focus:border-teal transition-colors"
-              placeholder="At least 6 characters"
+              placeholder="6 حروف على الأقل"
             />
           </div>
 
@@ -115,14 +115,14 @@ export default function SignupPage() {
             disabled={submitting}
             className="w-full mt-8 py-2 rounded-md bg-teal text-white text-sm font-medium hover:bg-teal-hover disabled:opacity-50 transition-colors cursor-pointer"
           >
-            {submitting ? "Creating account..." : "Create account"}
+            {submitting ? "جاري إنشاء الحساب..." : "اعمل الحساب"}
           </button>
         </form>
 
         <p className="text-center text-xs text-muted mt-6">
-          Already have an account?{" "}
+          عندك حساب خلاص؟{" "}
           <Link href="/login" className="text-teal font-medium hover:underline">
-            Sign in
+            سجّل دخول
           </Link>
         </p>
       </div>

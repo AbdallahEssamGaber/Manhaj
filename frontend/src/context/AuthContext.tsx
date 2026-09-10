@@ -3,24 +3,10 @@
 import {
   createContext,
   useContext,
-  useEffect,
   useState,
   type ReactNode,
 } from "react";
-import {
-  EmailAuthProvider,
-  createUserWithEmailAndPassword,
-  linkWithCredential,
-  onAuthStateChanged,
-  signInAnonymously,
-  signInWithEmailAndPassword,
-  signOut as firebaseSignOut,
-  updateProfile,
-  type User,
-} from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db, isConfigured } from "@/lib/firebase";
-import { getLocalUid, loadChats, saveChat } from "@/lib/store";
+import { getLocalUid } from "@/lib/store";
 
 export interface AppUser {
   uid: string;
@@ -32,23 +18,15 @@ export interface AppUser {
 interface AuthContextValue {
   user: AppUser | null;
   loading: boolean;
-  /** Creates a trial identity (Firebase anonymous auth, or a local uid in demo mode). */
+  /** Creates a trial identity (a local uid). */
   startGuest: () => Promise<AppUser>;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (name: string, email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
-  isDemo: boolean;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-function fromFirebaseUser(u: User): AppUser {
-  return { uid: u.uid, email: u.email, displayName: u.displayName, isAnonymous: u.isAnonymous };
-}
-
-/** Local (unconfigured-Firebase) identity lives in one shared browser uid so
- * a guest's data trivially "carries over" once they sign up — same storage key
- * the whole time, see lib/store.ts. */
 function localUser(overrides: Partial<AppUser> = {}): AppUser {
   return {
     uid: getLocalUid(),
@@ -59,11 +37,10 @@ function localUser(overrides: Partial<AppUser> = {}): AppUser {
   };
 }
 
-// In demo mode, only resume a session if this browser already has a local
-// identity — a first-time visitor should still see onboarding. Resolved via
-// a lazy useState initializer (not an effect) since it's synchronous.
-function initialDemoUser(): AppUser | null {
-  if (isConfigured) return null;
+// Only resume a session if this browser already has a local identity — a
+// first-time visitor should still see onboarding. Resolved via a lazy
+// useState initializer (not an effect) since it's synchronous.
+function initialUser(): AppUser | null {
   try {
     const existing = localStorage.getItem("manhaj:localUid");
     if (!existing) return null;
@@ -76,112 +53,46 @@ function initialDemoUser(): AppUser | null {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AppUser | null>(initialDemoUser);
-  const [loading, setLoading] = useState(isConfigured);
-
-  useEffect(() => {
-    if (!isConfigured || !auth) return;
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
-      setUser(u ? fromFirebaseUser(u) : null);
-      setLoading(false);
-    });
-    return unsubscribe;
-  }, []);
+  const [user, setUser] = useState<AppUser | null>(initialUser);
 
   async function startGuest(): Promise<AppUser> {
-    if (!isConfigured || !auth) {
-      const u = localUser();
-      setUser(u);
-      return u;
-    }
-    if (auth.currentUser) return fromFirebaseUser(auth.currentUser);
-    const cred = await signInAnonymously(auth);
-    return fromFirebaseUser(cred.user);
+    const u = localUser();
+    setUser(u);
+    return u;
   }
 
-  async function signIn(email: string, password: string) {
-    if (!isConfigured || !auth) {
-      try {
-        localStorage.setItem("manhaj:localEmail", email);
-      } catch {
-        // ignore
-      }
-      setUser(localUser({ email, displayName: email.split("@")[0], isAnonymous: false }));
-      return;
+  async function signIn(email: string, _password: string) {
+    try {
+      localStorage.setItem("manhaj:localEmail", email);
+    } catch {
+      // ignore
     }
-
-    const guestUid = auth.currentUser?.isAnonymous ? auth.currentUser.uid : null;
-    const cred = await signInWithEmailAndPassword(auth, email, password);
-
-    if (guestUid && guestUid !== cred.user.uid) {
-      try {
-        const guestChats = await loadChats(guestUid);
-        for (const chat of guestChats) {
-          await saveChat(cred.user.uid, chat, guestChats);
-        }
-      } catch {
-        // best-effort chat carry-over; never block sign-in on it
-      }
-    }
+    setUser(localUser({ email, displayName: email.split("@")[0], isAnonymous: false }));
   }
 
-  async function signUp(name: string, email: string, password: string) {
-    if (!isConfigured || !auth) {
-      try {
-        localStorage.setItem("manhaj:localName", name);
-        localStorage.setItem("manhaj:localEmail", email);
-      } catch {
-        // ignore
-      }
-      setUser(localUser({ email, displayName: name, isAnonymous: false }));
-      return;
+  async function signUp(name: string, email: string, _password: string) {
+    try {
+      localStorage.setItem("manhaj:localName", name);
+      localStorage.setItem("manhaj:localEmail", email);
+    } catch {
+      // ignore
     }
-
-    if (auth.currentUser?.isAnonymous) {
-      const credential = EmailAuthProvider.credential(email, password);
-      const linked = await linkWithCredential(auth.currentUser, credential);
-      await updateProfile(linked.user, { displayName: name });
-      if (db) {
-        try {
-          await setDoc(doc(db, "users", linked.user.uid), { name, email }, { merge: true });
-        } catch {
-          // best effort
-        }
-      }
-      setUser(fromFirebaseUser(linked.user));
-      return;
-    }
-
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(cred.user, { displayName: name });
-    if (db) {
-      try {
-        await setDoc(doc(db, "users", cred.user.uid), { name, email, createdAt: Date.now() }, { merge: true });
-      } catch {
-        // best effort
-      }
-    }
+    setUser(localUser({ email, displayName: name, isAnonymous: false }));
   }
 
   async function signOut() {
-    if (!isConfigured || !auth) {
-      try {
-        localStorage.removeItem("manhaj:localUid");
-        localStorage.removeItem("manhaj:localName");
-        localStorage.removeItem("manhaj:localEmail");
-      } catch {
-        // ignore
-      }
-      setUser(null);
-      return;
+    try {
+      localStorage.removeItem("manhaj:localUid");
+      localStorage.removeItem("manhaj:localName");
+      localStorage.removeItem("manhaj:localEmail");
+    } catch {
+      // ignore
     }
-    await firebaseSignOut(auth);
+    setUser(null);
   }
 
   return (
-    <AuthContext.Provider
-      value={{ user, loading, startGuest, signIn, signUp, signOut, isDemo: !isConfigured }}
-    >
+    <AuthContext.Provider value={{ user, loading: false, startGuest, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   );

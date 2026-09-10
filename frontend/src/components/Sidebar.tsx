@@ -98,10 +98,10 @@ export default function Sidebar({
         <button
           onClick={() => setCollapsed(true)}
           className="p-1 rounded-md hover:bg-surface-hover text-muted-light transition-colors cursor-pointer shrink-0"
-          title="Collapse sidebar"
+          title="طي القائمة"
         >
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </button>
       </div>
@@ -122,14 +122,14 @@ export default function Sidebar({
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={3}
-                  className={`text-muted-light shrink-0 transition-transform ${isOpen ? "rotate-90" : ""}`}
+                  className={`text-muted-light shrink-0 transition-transform ${isOpen ? "-rotate-90" : ""}`}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
                 <span className="w-5 h-5 rounded bg-teal-soft text-teal text-[9px] font-bold flex items-center justify-center shrink-0">
                   {subject.monogram}
                 </span>
-                <span className="flex-1 min-w-0 text-left text-[13px] font-medium text-foreground truncate">{subject.name}</span>
+                <span className="flex-1 min-w-0 text-right text-[13px] font-medium text-foreground truncate">{subject.name}</span>
                 <span
                   role="button"
                   tabIndex={0}
@@ -138,7 +138,7 @@ export default function Sidebar({
                     onNewChat(subject.name);
                   }}
                   className="opacity-0 group-hover:opacity-100 text-muted-light hover:text-teal p-0.5 rounded transition-opacity shrink-0"
-                  title={`New ${subject.name} chat`}
+                  title={`محادثة جديدة في ${subject.name}`}
                 >
                   <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -147,13 +147,13 @@ export default function Sidebar({
               </button>
 
               {isOpen && (
-                <div className="pl-[26px] space-y-px py-0.5">
+                <div className="pr-[26px] space-y-px py-0.5">
                   {subject.chats.length === 0 ? (
                     <button
                       onClick={() => onNewChat(subject.name)}
                       className="text-xs text-muted-light hover:text-teal px-2 py-1 rounded transition-colors cursor-pointer"
                     >
-                      + Start a conversation
+                      + ابدأ محادثة
                     </button>
                   ) : (
                     subject.chats.map((chat) => (
@@ -196,7 +196,7 @@ export default function Sidebar({
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v12m0-12l-4 4m4-4l4 4M4 18h16" />
           </svg>
-          Submit your university/material
+          قدّم جامعتك أو مادتك
         </button>
       </div>
 
@@ -207,16 +207,16 @@ export default function Sidebar({
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-[13px] font-medium text-foreground truncate">
-              {user?.displayName || (user?.isAnonymous ? "Trial session" : "Student")}
+              {user?.displayName || (user?.isAnonymous ? "جلسة تجريبية" : "طالب")}
             </p>
           </div>
           {user?.isAnonymous ? (
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-teal bg-teal-soft px-1.5 py-0.5 rounded shrink-0">Trial</span>
+            <span className="text-[10px] font-semibold text-teal bg-teal-soft px-1.5 py-0.5 rounded shrink-0">تجربة</span>
           ) : (
             <button
               onClick={signOut}
               className="p-1 rounded-md hover:bg-surface-hover text-muted-light hover:text-foreground transition-colors cursor-pointer"
-              title="Sign out"
+              title="تسجيل الخروج"
             >
               <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

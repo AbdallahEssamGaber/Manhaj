@@ -49,16 +49,16 @@ export default function MockExamBlock({ exam }: { exam: MockExam }) {
   if (phase === "intro") {
     return (
       <div className="w-full text-center py-2">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-light">Mock Exam · {exam.topic}</span>
+        <span className="text-[11px] font-semibold text-muted-light">امتحان تجريبي · {exam.topic}</span>
         <p className="text-sm text-muted mt-2 font-reading">
-          {exam.questions.length} questions · {formatTime(exam.durationSeconds)} on the clock, timing starts when you begin.
+          {exam.questions.length} سؤال · {formatTime(exam.durationSeconds)} على الساعة، الوقت بيبدأ لما تبدأ.
         </p>
         <button
           type="button"
           onClick={start}
           className="mt-4 px-5 py-2.5 rounded-md bg-navy text-white text-sm font-semibold hover:opacity-90 transition-opacity cursor-pointer"
         >
-          Begin exam
+          ابدأ الامتحان
         </button>
       </div>
     );
@@ -68,11 +68,11 @@ export default function MockExamBlock({ exam }: { exam: MockExam }) {
     const pct = Math.round((score / exam.questions.length) * 100);
     return (
       <div className="w-full text-center py-2">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-light">Mock Exam · {exam.topic}</span>
+        <span className="text-[11px] font-semibold text-muted-light">امتحان تجريبي · {exam.topic}</span>
         <p className="font-display text-3xl font-bold text-foreground mt-3">
           {score}/{exam.questions.length}
         </p>
-        <p className="text-sm text-muted mt-1">{pct}% · finished with {formatTime(timeLeft)} remaining</p>
+        <p className="text-sm text-muted mt-1">{pct}% · خلصت وباقيلك {formatTime(timeLeft)}</p>
       </div>
     );
   }
@@ -83,8 +83,8 @@ export default function MockExamBlock({ exam }: { exam: MockExam }) {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-3">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-light">
-          Question {index + 1} / {exam.questions.length}
+        <span className="text-[11px] font-semibold text-muted-light">
+          سؤال {index + 1} / {exam.questions.length}
         </span>
         <span
           className={`text-xs font-semibold tabular-nums px-2 py-0.5 rounded ${
@@ -102,7 +102,7 @@ export default function MockExamBlock({ exam }: { exam: MockExam }) {
             key={i}
             type="button"
             onClick={() => choose(i)}
-            className={`w-full text-left text-sm px-3 py-2 rounded-md border transition-colors cursor-pointer ${
+            className={`w-full text-right text-sm px-3 py-2 rounded-md border transition-colors cursor-pointer ${
               answers[index] === i
                 ? "border-teal bg-teal-soft text-foreground"
                 : "border-border hover:border-teal/50 hover:bg-teal-soft/40"
@@ -118,9 +118,12 @@ export default function MockExamBlock({ exam }: { exam: MockExam }) {
           type="button"
           onClick={() => setIndex((i) => Math.max(0, i - 1))}
           disabled={index === 0}
-          className="px-3 py-1.5 rounded-md text-xs font-medium text-muted hover:text-foreground hover:bg-surface-hover disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+          className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium text-muted hover:text-foreground hover:bg-surface-hover disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
         >
-          ← Previous
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+          السابق
         </button>
         {isLast ? (
           <button
@@ -128,15 +131,18 @@ export default function MockExamBlock({ exam }: { exam: MockExam }) {
             onClick={submit}
             className="px-4 py-1.5 rounded-md bg-navy text-white text-xs font-semibold hover:opacity-90 transition-opacity cursor-pointer"
           >
-            Submit exam
+            سلّم الامتحان
           </button>
         ) : (
           <button
             type="button"
             onClick={() => setIndex((i) => i + 1)}
-            className="px-3 py-1.5 rounded-md text-xs font-medium text-muted hover:text-foreground hover:bg-surface-hover transition-colors cursor-pointer"
+            className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-medium text-muted hover:text-foreground hover:bg-surface-hover transition-colors cursor-pointer"
           >
-            Next →
+            التالي
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
           </button>
         )}
       </div>

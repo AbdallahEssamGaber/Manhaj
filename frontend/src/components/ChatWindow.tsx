@@ -44,7 +44,7 @@ function SourcesCaption({ sources }: { sources?: string[] }) {
   if (!sources || sources.length === 0) return null;
   return (
     <p className="mt-3 pt-2.5 border-t border-border-light text-[11px] text-muted-light">
-      Based on <span className="font-medium text-muted">{sources.join(", ")}</span>
+      المصدر: <span className="font-medium text-muted">{sources.join("، ")}</span>
     </p>
   );
 }
@@ -143,12 +143,12 @@ export default function ChatWindow({ messages, subject, onSend, loading, onOpenR
     <div className="flex-1 flex flex-col h-full min-w-0">
       {isEmpty ? (
         <div className="flex-1 flex flex-col items-center justify-center p-8">
-          <div className="w-full max-w-xl mb-6 text-center sm:text-left">
+          <div className="w-full max-w-xl mb-6 text-center sm:text-right">
             <div className="mb-2 inline-block">
               <SubjectBadge subject={subject} />
             </div>
             <p className="text-sm text-muted mt-3 font-reading">
-              Ask a question, or generate flashcards, a quiz, or a mock exam from your course material.
+              اسأل سؤال، أو اعمل فلاش كارد أو كويز أو امتحان تجريبي من مادة كورسك.
             </p>
           </div>
           <div className="w-full max-w-xl">
@@ -295,15 +295,15 @@ function ChatInput({
           onKeyDown={onKeyDown}
           placeholder={placeholder}
           rows={1}
-          className="w-full resize-none rounded-lg border border-border bg-surface px-4 py-3 pr-11 text-sm text-foreground placeholder-muted-light focus:outline-none focus:ring-2 focus:ring-teal/40 focus:border-teal transition-colors"
+          className="w-full resize-none rounded-lg border border-border bg-surface px-4 py-3 pl-11 text-sm text-foreground placeholder-muted-light focus:outline-none focus:ring-2 focus:ring-teal/40 focus:border-teal transition-colors"
         />
         <button
           type="submit"
           disabled={!input.trim() || loading}
-          className="absolute right-2 bottom-2 p-1.5 rounded-md bg-teal text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-teal-hover transition-colors cursor-pointer"
+          className="absolute left-2 bottom-2 p-1.5 rounded-md bg-teal text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-teal-hover transition-colors cursor-pointer"
         >
           <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5M12 5l-7 7 7 7" />
           </svg>
         </button>
       </div>

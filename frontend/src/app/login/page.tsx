@@ -30,11 +30,11 @@ export default function LoginPage() {
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Sign in failed";
       if (message.includes("invalid-credential") || message.includes("wrong-password")) {
-        setError("Invalid email or password.");
+        setError("الإيميل أو الباسورد غلط.");
       } else if (message.includes("user-not-found")) {
-        setError("No account found with this email.");
+        setError("مفيش حساب بالإيميل ده.");
       } else {
-        setError("Sign in failed. Please try again.");
+        setError("تسجيل الدخول مانفعش. جرب تاني.");
       }
     } finally {
       setSubmitting(false);
@@ -49,18 +49,18 @@ export default function LoginPage() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <h1 className="text-center text-lg font-semibold text-foreground mb-6">Sign in</h1>
+          <h1 className="text-center text-lg font-semibold text-foreground mb-6">تسجيل الدخول</h1>
 
           {error && <p className="text-sm text-incorrect mb-5">{error}</p>}
           {user?.isAnonymous && (
             <p className="text-xs text-teal bg-teal-soft rounded-md px-3 py-2 mb-5 font-reading">
-              Your trial chats will carry over once you sign in.
+              محادثات التجربة هتفضل موجودة لما تسجّل دخول.
             </p>
           )}
 
           <div>
             <label htmlFor="email" className="block text-xs font-medium text-muted mb-1.5">
-              Email
+              الإيميل
             </label>
             <input
               id="email"
@@ -75,7 +75,7 @@ export default function LoginPage() {
 
           <div className="mt-5">
             <label htmlFor="password" className="block text-xs font-medium text-muted mb-1.5">
-              Password
+              الباسورد
             </label>
             <input
               id="password"
@@ -93,14 +93,14 @@ export default function LoginPage() {
             disabled={submitting}
             className="w-full mt-8 py-2 rounded-md bg-teal text-white text-sm font-medium hover:bg-teal-hover disabled:opacity-50 transition-colors cursor-pointer"
           >
-            {submitting ? "Signing in..." : "Sign in"}
+            {submitting ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
           </button>
         </form>
 
         <p className="text-center text-xs text-muted mt-6">
-          Don&apos;t have an account?{" "}
+          معندكش حساب؟{" "}
           <Link href="/signup" className="text-teal font-medium hover:underline">
-            Sign up
+            سجّل واحد
           </Link>
         </p>
       </div>

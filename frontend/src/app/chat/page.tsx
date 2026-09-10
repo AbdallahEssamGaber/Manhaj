@@ -81,7 +81,7 @@ export default function ChatPage() {
 
   function createChat(subject: string): Chat {
     const now = Date.now();
-    const chat: Chat = { id: generateId(), subject, title: "New chat", messages: [], createdAt: now, updatedAt: now };
+    const chat: Chat = { id: generateId(), subject, title: "محادثة جديدة", messages: [], createdAt: now, updatedAt: now };
     setChats((prev) => [chat, ...prev]);
     setActiveChatId(chat.id);
     return chat;
@@ -129,7 +129,7 @@ export default function ChatPage() {
       const errorMsg: Message = {
         id: generateId(),
         role: "assistant",
-        content: "Sorry, something went wrong reaching the course material. Please try again.",
+        content: "معلش، حصلت مشكلة في الوصول لمادة الكورس. جرب تاني.",
         timestamp: Date.now(),
       };
       const errorChat: Chat = { ...updatedChat, messages: [...updatedChat.messages, errorMsg], updatedAt: Date.now() };

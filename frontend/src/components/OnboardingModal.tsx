@@ -62,7 +62,7 @@ export default function OnboardingModal({ onComplete }: OnboardingModalProps) {
                   }`}
                 />
                 <span
-                  className={`mt-1.5 block text-[11px] font-medium uppercase tracking-wider ${
+                  className={`mt-1.5 block text-[11px] font-medium ${
                     i === step ? "text-teal" : "text-muted-light"
                   }`}
                 >

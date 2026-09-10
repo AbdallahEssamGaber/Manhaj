@@ -115,7 +115,7 @@ export default function LandingPage() {
                   هياكل البيانات
                 </span>
                 <div className="rounded-lg border border-teal/25 bg-teal-soft px-4 py-3.5">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-teal">فلاش كارد</span>
+                  <span className="text-[10px] font-semibold text-teal">فلاش كارد</span>
                   <p className="text-sm leading-relaxed text-foreground mt-1 font-reading">
                     إيه هي شجرة البحث الثنائي؟ — شجرة كل قيمة شمال فيها أصغر وكل قيمة يمين فيها أكبر.
                   </p>
@@ -174,7 +174,7 @@ export default function LandingPage() {
               key={m.label}
               className={`w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] rounded-xl border border-border bg-surface p-5 transition-transform hover:rotate-0 hover:-translate-y-1 ${rotations[i % rotations.length]}`}
             >
-              <span className="inline-block text-xs font-semibold text-teal uppercase tracking-wider">{m.label}</span>
+              <span className="inline-block text-xs font-semibold text-teal">{m.label}</span>
               <p className="mt-2 text-sm text-foreground leading-relaxed font-reading">{m.detail}</p>
             </div>
           ))}
