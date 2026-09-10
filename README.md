@@ -5,12 +5,12 @@ A chatbot for university students to study their subjects, trained on real cours
 ## Repo Structure
 
 ```
-/frontend    -> Abdallah: chat UI, sidebar by subject, Firebase Auth, chat history
-/rag         -> David: content ingestion, embeddings, retrieval, Gemini answering
-README.md    -> this file
+/src, /public, package.json, etc. -> Abdallah: chat UI, sidebar by subject, auth, chat history (repo root)
+/rag                               -> David: content ingestion, embeddings, retrieval, Gemini answering
+README.md                          -> this file
 ```
 
-Two folders, two owners. Don't edit inside the other person's folder unless discussed.
+The frontend lives at the repo root (deployed directly to Vercel, no subfolder). `/rag` is David's own folder. Don't edit inside the other person's area unless discussed.
 
 ## Tech Stack
 
@@ -80,7 +80,6 @@ If this contract needs to change, both people agree on it first, then update thi
 ## How Abdallah Runs the Frontend
 
 ```
-cd frontend
 npm install
 npm run dev
 ```
@@ -153,7 +152,7 @@ The frontend calls `http://localhost:8000/ask` (or the deployed URL later) with 
 
 ## Environment Variables (don't commit these)
 
-Create a `.env.local` in `/frontend` and `.env` in `/rag`:
+Create a `.env.local` in the repo root and `.env` in `/rag`:
 
 ```
 GEMINI_API_KEY=...
