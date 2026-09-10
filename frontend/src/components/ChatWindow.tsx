@@ -258,7 +258,7 @@ function StudyButtons({ onPick }: { onPick: (command: string) => void }) {
           key={b.mode}
           type="button"
           onClick={() => onPick(b.command)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12.5px] font-medium text-navy bg-navy-soft hover:bg-sky-soft transition-colors cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12.5px] font-medium text-white bg-navy hover:opacity-90 transition-opacity cursor-pointer"
         >
           {modeIcons[b.mode]}
           {b.label}
